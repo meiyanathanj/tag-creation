@@ -65628,6 +65628,8 @@ function main() {
         const newTag = `${tagPrefix}${newVersion}`;
         core.info(`New tag after applying prefix is ${newTag}.`);
         core.setOutput('new_tag', newTag);
+        console.log(`mappedReles`);
+        console.log(mappedReleaseRules);
         const changelog = yield (0, release_notes_generator_1.generateNotes)({
             preset: 'conventionalcommits',
             presetConfig: {
@@ -65642,6 +65644,7 @@ function main() {
             lastRelease: { gitTag: latestTag.name },
             nextRelease: { gitTag: newTag, version: newVersion },
         });
+        console.log(`*****after change log*****`);
         core.info(`Changelog is ${changelog}.`);
         core.setOutput('changelog', changelog);
         if (!isReleaseBranch && !isPreReleaseBranch) {
@@ -65968,6 +65971,10 @@ function mapCustomReleaseRules(customReleaseTypes) {
 exports.mapCustomReleaseRules = mapCustomReleaseRules;
 function mergeWithDefaultChangelogRules(mappedReleaseRules = []) {
     const mergedRules = mappedReleaseRules.reduce((acc, curr) => (Object.assign(Object.assign({}, acc), { [curr.type]: curr })), Object.assign({}, defaults_1.defaultChangelogRules));
+    console.log(`*****defaultChangelogRules*****`);
+    console.log(defaults_1.defaultChangelogRules);
+    console.log(`*****mergeRules*****`);
+    console.log(mergedRules);
     return Object.values(mergedRules).filter((rule) => !!rule.section);
 }
 exports.mergeWithDefaultChangelogRules = mergeWithDefaultChangelogRules;

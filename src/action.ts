@@ -93,6 +93,7 @@ export default async function main() {
   const identifier = (
     appendToPreReleaseTag ? appendToPreReleaseTag : currentBranch
   ).replace(/[^a-zA-Z0-9-]/g, '-');
+
   console.log(`identifier - ${identifier}`)
 
   const prefixRegex = new RegExp(`^${tagPrefix}`);
@@ -110,6 +111,7 @@ export default async function main() {
   console.log(validTags)
   console.log(latestTag)
   console.log(latestPrereleaseTag)
+
   let commits: Await<ReturnType<typeof getCommits>>;
 
   let newVersion: string;
@@ -221,6 +223,9 @@ export default async function main() {
   core.info(`New tag after applying prefix is ${newTag}.`);
   core.setOutput('new_tag', newTag);
 
+  console.log(`mappedReles`)
+  console.log(mappedReleaseRules)
+
   const changelog = await generateNotes(
     {
       preset: 'conventionalcommits',
@@ -238,6 +243,8 @@ export default async function main() {
       nextRelease: { gitTag: newTag, version: newVersion },
     }
   );
+  console.log(`*****after change log*****`)
+
   core.info(`Changelog is ${changelog}.`);
   core.setOutput('changelog', changelog);
 
