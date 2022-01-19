@@ -139,7 +139,7 @@ export function mergeWithDefaultChangelogRules(
   console.log(`*****defaultChangelogRules*****`)
   console.log(defaultChangelogRules)
   console.log(`*****mergeRules*****`)
-  console.log(mergedRules)
+  console.log(Object.values(mergedRules).filter((rule) => !!rule.section))
 
   return Object.values(mergedRules).filter((rule) => !!rule.section);
 }
