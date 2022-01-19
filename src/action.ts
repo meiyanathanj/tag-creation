@@ -61,9 +61,12 @@ export default async function main() {
 
   // Sanitize identifier according to
   // https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
+  console.log(`append - ${appendToPreReleaseTag}`)
+  console.log(`currnet branch - ${currentBranch}`)
   const identifier = (
     appendToPreReleaseTag ? appendToPreReleaseTag : currentBranch
   ).replace(/[^a-zA-Z0-9-]/g, '-');
+  console.log(`identifier - ${identifier}`)
 
   const prefixRegex = new RegExp(`^${tagPrefix}`);
 
@@ -77,7 +80,9 @@ export default async function main() {
     identifier,
     prefixRegex
   );
-
+  console.log(`validTags - ${validTags}`)
+  console.log(`latestTag - ${latestTag}`)
+  console.log(`latestPrereleaseTag - ${latestPrereleaseTag}`)
   let commits: Await<ReturnType<typeof getCommits>>;
 
   let newVersion: string;

@@ -65515,11 +65515,17 @@ function main() {
         const isPrerelease = !isReleaseBranch && !isPullRequest && isPreReleaseBranch;
         // Sanitize identifier according to
         // https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
+        console.log(`append - ${appendToPreReleaseTag}`);
+        console.log(`currnet branch - ${currentBranch}`);
         const identifier = (appendToPreReleaseTag ? appendToPreReleaseTag : currentBranch).replace(/[^a-zA-Z0-9-]/g, '-');
+        console.log(`identifier - ${identifier}`);
         const prefixRegex = new RegExp(`^${tagPrefix}`);
         const validTags = yield (0, utils_1.getValidTags)(prefixRegex, /true/i.test(shouldFetchAllTags));
         const latestTag = (0, utils_1.getLatestTag)(validTags, prefixRegex, tagPrefix);
         const latestPrereleaseTag = (0, utils_1.getLatestPrereleaseTag)(validTags, identifier, prefixRegex);
+        console.log(`validTags - ${validTags}`);
+        console.log(`latestTag - ${latestTag}`);
+        console.log(`latestPrereleaseTag - ${latestPrereleaseTag}`);
         let commits;
         let newVersion;
         if (customTag) {
