@@ -30,7 +30,34 @@ export default async function main() {
   const customReleaseRules = core.getInput('custom_release_rules');
   const shouldFetchAllTags = core.getInput('fetch_all_tags');
   const commitSha = core.getInput('commit_sha');
-
+  console.log(defaultBump,
+    defaultPreReleaseBump,
+    tagPrefix,
+    customTag,
+    releaseBranches,
+    preReleaseBranches,
+    appendToPreReleaseTag,
+    createAnnotatedTag,
+    dryRun,
+    customReleaseRules,
+    shouldFetchAllTags,
+    commitSha)
+  // const defaultBump = 'patch' as ReleaseType | 'false';
+  // const defaultPreReleaseBump = 'prerelease' as
+  //   | ReleaseType
+  //   | 'false';
+  // const tagPrefix = 'v';
+  // // const customTag = 
+  // const releaseBranches = 'main';
+  // // const preReleaseBranches = 
+  // // const appendToPreReleaseTag = 
+  // // const createAnnotatedTag = 
+  // const dryRun = true;
+  // const customReleaseRules = '';
+  // const shouldFetchAllTags = false;
+  // // const commitSha = 
+  // // const GITHUB_REF = 
+  
   let mappedReleaseRules;
   if (customReleaseRules) {
     mappedReleaseRules = mapCustomReleaseRules(customReleaseRules);
@@ -80,9 +107,9 @@ export default async function main() {
     identifier,
     prefixRegex
   );
-  console.log(`validTags - ${validTags}`)
-  console.log(`latestTag - ${latestTag}`)
-  console.log(`latestPrereleaseTag - ${latestPrereleaseTag}`)
+  console.log(validTags)
+  console.log(latestTag)
+  console.log(latestPrereleaseTag)
   let commits: Await<ReturnType<typeof getCommits>>;
 
   let newVersion: string;
