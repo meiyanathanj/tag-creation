@@ -19,6 +19,7 @@ jobs:
         uses: ./
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry_run: true
       - name: Create a Github Release
         id: create_release
         uses: actions/create-release@v1
