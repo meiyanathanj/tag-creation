@@ -65490,22 +65490,35 @@ function main() {
         const customReleaseRules = core.getInput('custom_release_rules');
         const shouldFetchAllTags = core.getInput('fetch_all_tags');
         const commitSha = core.getInput('commit_sha');
-        console.log(defaultBump, defaultPreReleaseBump, tagPrefix, customTag, releaseBranches, preReleaseBranches, appendToPreReleaseTag, createAnnotatedTag, dryRun, customReleaseRules, shouldFetchAllTags, commitSha);
         // const defaultBump = 'patch' as ReleaseType | 'false';
         // const defaultPreReleaseBump = 'prerelease' as
         //   | ReleaseType
         //   | 'false';
         // const tagPrefix = 'v';
-        // // const customTag = 
+        // const customTag = '';
         // const releaseBranches = 'main';
-        // // const preReleaseBranches = 
-        // // const appendToPreReleaseTag = 
-        // // const createAnnotatedTag = 
+        // const preReleaseBranches = '';
+        // const appendToPreReleaseTag = '';
+        // const createAnnotatedTag = false;
         // const dryRun = true;
         // const customReleaseRules = '';
         // const shouldFetchAllTags = false;
-        // // const commitSha = 
-        // // const GITHUB_REF = 
+        // const commitSha = '';
+        // const GITHUB_REF = 
+        console.log(`defaultBump- ${defaultBump} || ,
+  defaultPreReleaseBump - ${defaultPreReleaseBump} || ,
+    tagPrefix - ${tagPrefix} || ,
+    customTag - ${customTag} || ,
+    releaseBranches - ${releaseBranches} || ,
+    preReleaseBranches - ${preReleaseBranches} || ,
+    appendToPreReleaseTag - ${appendToPreReleaseTag} || ,
+    createAnnotatedTag - ${createAnnotatedTag} || ,
+    dryRun - ${dryRun} || ,
+    customReleaseRules - ${customReleaseRules} || ,
+    shouldFetchAllTags - ${shouldFetchAllTags} || ,
+    commitSha - ${commitSha},
+    GITHUB_REF - ${process.env.GITHUB_REF},
+    GITHUB_SHA - ${process.env.GITHUB_SHA}`);
         let mappedReleaseRules;
         if (customReleaseRules) {
             mappedReleaseRules = (0, utils_1.mapCustomReleaseRules)(customReleaseRules);
@@ -65531,7 +65544,6 @@ function main() {
         const isPrerelease = !isReleaseBranch && !isPullRequest && isPreReleaseBranch;
         // Sanitize identifier according to
         // https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
-        console.log(`append - ${appendToPreReleaseTag}`);
         console.log(`currnet branch - ${currentBranch}`);
         const identifier = (appendToPreReleaseTag ? appendToPreReleaseTag : currentBranch).replace(/[^a-zA-Z0-9-]/g, '-');
         console.log(`identifier - ${identifier}`);
@@ -65539,7 +65551,7 @@ function main() {
         const validTags = yield (0, utils_1.getValidTags)(prefixRegex, /true/i.test(shouldFetchAllTags));
         const latestTag = (0, utils_1.getLatestTag)(validTags, prefixRegex, tagPrefix);
         const latestPrereleaseTag = (0, utils_1.getLatestPrereleaseTag)(validTags, identifier, prefixRegex);
-        console.log(validTags);
+        console.log('******latestTags****');
         console.log(latestTag);
         console.log(latestPrereleaseTag);
         let commits;
@@ -65889,11 +65901,17 @@ const defaults_1 = __nccwpck_require__(1109);
 function getValidTags(prefixRegex, shouldFetchAllTags) {
     return __awaiter(this, void 0, void 0, function* () {
         const tags = yield (0, github_1.listTags)(shouldFetchAllTags);
+        console.log(`*******tags****`);
+        console.log(tags);
         const invalidTags = tags.filter((tag) => !(0, semver_1.valid)(tag.name.replace(prefixRegex, '')));
+        console.log(`*******invalidTags****`);
+        console.log(invalidTags);
         invalidTags.forEach((name) => core.debug(`Found Invalid Tag: ${name}.`));
         const validTags = tags
             .filter((tag) => (0, semver_1.valid)(tag.name.replace(prefixRegex, '')))
             .sort((a, b) => (0, semver_1.rcompare)(a.name.replace(prefixRegex, ''), b.name.replace(prefixRegex, '')));
+        console.log(`*******validTags****`);
+        console.log(validTags);
         validTags.forEach((tag) => core.debug(`Found Valid Tag: ${tag.name}.`));
         return validTags;
     });
@@ -65974,7 +65992,7 @@ function mergeWithDefaultChangelogRules(mappedReleaseRules = []) {
     console.log(`*****defaultChangelogRules*****`);
     console.log(defaults_1.defaultChangelogRules);
     console.log(`*****mergeRules*****`);
-    console.log(mergedRules);
+    console.log(Object.values(mergedRules).filter((rule) => !!rule.section));
     return Object.values(mergedRules).filter((rule) => !!rule.section);
 }
 exports.mergeWithDefaultChangelogRules = mergeWithDefaultChangelogRules;
