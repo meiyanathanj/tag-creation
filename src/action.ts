@@ -30,18 +30,36 @@ export default async function main() {
   const customReleaseRules = core.getInput('custom_release_rules');
   const shouldFetchAllTags = core.getInput('fetch_all_tags');
   const commitSha = core.getInput('commit_sha');
-  console.log(defaultBump,
-    defaultPreReleaseBump,
-    tagPrefix,
-    customTag,
-    releaseBranches,
-    preReleaseBranches,
-    appendToPreReleaseTag,
-    createAnnotatedTag,
-    dryRun,
-    customReleaseRules,
-    shouldFetchAllTags,
-    commitSha);
+
+  // const defaultBump = 'patch' as ReleaseType | 'false';
+  // const defaultPreReleaseBump = 'prerelease' as
+  //   | ReleaseType
+  //   | 'false';
+  // const tagPrefix = 'v';
+  // const customTag = '';
+  // const releaseBranches = 'main';
+  // const preReleaseBranches = '';
+  // const appendToPreReleaseTag = '';
+  // const createAnnotatedTag = false;
+  // const dryRun = true;
+  // const customReleaseRules = '';
+  // const shouldFetchAllTags = false;
+  // const commitSha = '';
+  // const GITHUB_REF = 
+  console.log(`defaultBump- ${defaultBump} || ,
+  defaultPreReleaseBump - ${defaultPreReleaseBump} || ,
+    tagPrefix - ${tagPrefix} || ,
+    customTag - ${customTag} || ,
+    releaseBranches - ${releaseBranches} || ,
+    preReleaseBranches - ${preReleaseBranches} || ,
+    appendToPreReleaseTag - ${appendToPreReleaseTag} || ,
+    createAnnotatedTag - ${createAnnotatedTag} || ,
+    dryRun - ${dryRun} || ,
+    customReleaseRules - ${customReleaseRules} || ,
+    shouldFetchAllTags - ${shouldFetchAllTags} || ,
+    commitSha - ${commitSha},
+    GITHUB_REF - ${process.env.GITHUB_REF},
+    GITHUB_SHA - ${process.env.GITHUB_SHA}`);
   
   
   let mappedReleaseRules;
@@ -93,7 +111,7 @@ export default async function main() {
     identifier,
     prefixRegex
   );
-  console.log(validTags)
+  console.log('******latestTags****')
   console.log(latestTag)
   console.log(latestPrereleaseTag)
 

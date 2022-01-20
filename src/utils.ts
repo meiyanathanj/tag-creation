@@ -13,11 +13,14 @@ export async function getValidTags(
   shouldFetchAllTags: boolean
 ) {
   const tags = await listTags(shouldFetchAllTags);
-
+  console.log(`*******tags****`)
+  console.log(tags)
   const invalidTags = tags.filter(
     (tag) => !valid(tag.name.replace(prefixRegex, ''))
   );
-
+  
+  console.log(`*******invalidTags****`)
+  console.log(invalidTags)
   invalidTags.forEach((name) => core.debug(`Found Invalid Tag: ${name}.`));
 
   const validTags = tags
@@ -25,7 +28,9 @@ export async function getValidTags(
     .sort((a, b) =>
       rcompare(a.name.replace(prefixRegex, ''), b.name.replace(prefixRegex, ''))
     );
-
+  
+  console.log(`*******validTags****`)
+  console.log(validTags)
   validTags.forEach((tag) => core.debug(`Found Valid Tag: ${tag.name}.`));
 
   return validTags;
