@@ -41,22 +41,8 @@ export default async function main() {
     dryRun,
     customReleaseRules,
     shouldFetchAllTags,
-    commitSha)
-  // const defaultBump = 'patch' as ReleaseType | 'false';
-  // const defaultPreReleaseBump = 'prerelease' as
-  //   | ReleaseType
-  //   | 'false';
-  // const tagPrefix = 'v';
-  // // const customTag = 
-  // const releaseBranches = 'main';
-  // // const preReleaseBranches = 
-  // // const appendToPreReleaseTag = 
-  // // const createAnnotatedTag = 
-  // const dryRun = true;
-  // const customReleaseRules = '';
-  // const shouldFetchAllTags = false;
-  // // const commitSha = 
-  // // const GITHUB_REF = 
+    commitSha);
+  
   
   let mappedReleaseRules;
   if (customReleaseRules) {
@@ -88,7 +74,6 @@ export default async function main() {
 
   // Sanitize identifier according to
   // https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions
-  console.log(`append - ${appendToPreReleaseTag}`)
   console.log(`currnet branch - ${currentBranch}`)
   const identifier = (
     appendToPreReleaseTag ? appendToPreReleaseTag : currentBranch
