@@ -22,7 +22,7 @@ jobs:
         id: tag_version
         uses: negz/create-tag@v1
         with: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{github.event.inputs.version}}
           message: ${{github.event.inputs.message}}
       # - name: Create a Github Release
